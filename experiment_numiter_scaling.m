@@ -71,7 +71,7 @@ for ki=1:length(kfracs)
 end
 hold off;
 xlabel('n');
-ylabel('Iterations-on-Encoded / Iterations-on-original');
+ylabel('Iters-on-Encoded / Iters-on-original');
 xlim([0,3250]);
 set_figure_size([3,3]);
 box off;
