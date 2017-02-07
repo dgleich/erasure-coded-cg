@@ -59,7 +59,8 @@ save conduf.mat results mats names groups kfracs nrep M kappas
 
 %%  
 load conduf
-
+index = UFget;
+ns = index.nrows(mats)';
 %%
 medresults = median(results,3);
 plot(ns(1:M),medresults','.');
@@ -121,7 +122,7 @@ for i=1:size(maxresults,1)
             adjust = -0.01;
         end
         h = text(subkap(i),maxresults(i,4)+adjust,...
-            sprintf(' n=%i, %s/%s', ns(i), subnames{i}, subgroups{i}));
+            sprintf(' n=%i, %s/%s', ns(i), subgroups{i}, subnames{i}));
         set(h,'Rotation',35,'FontSize',7,'Interpreter','none')
         
     end
@@ -133,7 +134,7 @@ xlabel('\kappa');
 ylabel('\kappa''/\kappa');
 box off;
 xlim([1e1,1e12]);
-set_figure_size([4,4]);
+set_figure_size([6,4]);
 print('conduf-20p.eps','-depsc2');
 
 %%
@@ -149,7 +150,7 @@ for i=1:size(maxresults,1)
             adjust = -0.01;
         end
         h = text(subkap(i),maxresults(i,1)+adjust,...
-            sprintf(' n=%i, %s/%s', ns(i), subnames{i}, subgroups{i}));
+            sprintf(' n=%i, %s/%s', ns(i), subgroups{i}, subnames{i}));
         set(h,'Rotation',35,'FontSize',7,'Interpreter','none')
         
     end
@@ -161,7 +162,7 @@ xlabel('\kappa');
 ylabel('\kappa''/\kappa');
 box off;
 xlim([1e1,1e12]);
-set_figure_size([4,4]);
+set_figure_size([6,3]);
 print('conduf-1p.eps','-depsc2');
 
 
@@ -177,6 +178,20 @@ end
 set(gca,'XScale','log');
 %%
 plot(diff(medresults'))
+
+%% Print out the data for the table
+for i=1:size(maxresults,2)
+    fprintf('%i%% ', 100*kfracs(i));
+    fprintf(' & %.3f ', prctile(maxresults(:,i),50));
+    fprintf(' & %.3f ', prctile(maxresults(:,i),80));
+    fprintf(' & %.3f ', prctile(maxresults(:,i),95));
+    fprintf(' & %.3f ', max(maxresults(:,i)));
+    fprintf('\\\\ \n');
+end    
     
+%% Print off all the matrix names
+for i=1:length(subgroups)
+    fprintf('\"%s/%s\", \n', subgroups{i}, subnames{i});
+end
 
 
