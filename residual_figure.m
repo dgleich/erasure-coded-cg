@@ -4,7 +4,8 @@ clf;
 semilogy(resvec,'.-','LineWidth',1);
 if failiter > 0
     hold on;
-    plot(failiter,resvec(failiter),'rx','MarkerSize',8);
+    plot(failiter,resvec(failiter),'ro','MarkerSize',10);
+    plot(failiter,resvec(failiter),'rx','MarkerSize',10);
     hold off;
 end
 ylabel('residual norm');
